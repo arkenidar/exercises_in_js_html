@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="UTF-8">
+
+<ul id="list">
+    <li>1st element (click me)</li>
+    <li>2nd element (click me)</li>
+    <li>3rd element (click me)</li>
+</ul>
+
+<script>
+
+    function li_onclick(){
+        alert(this.innerText)
+        document.querySelector('#list').removeChild(this)
+    }
+
+    document.querySelectorAll('ul#list li').forEach(
+        function(li){
+            li.onclick = li_onclick
+        }
+    )
+
+</script>

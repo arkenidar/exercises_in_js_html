@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset="UTF-8">
+
+<button id="add_button">add</button>
+
+<ul id="list"></ul>
+
+<script>
+    function add_onclick(){
+        var li = document.createElement('li')
+        li.innerText = prompt('add element')
+        document.querySelector('#list').appendChild(li)
+    }
+    document.querySelector('#add_button').onclick = add_onclick
+</script>

@@ -1,0 +1,13 @@
+<!doctype html>
+<meta charset="UTF-8">
+
+<button id="button">click me</button>
+
+<script>
+    alert('message from alert')
+
+    function button_onclick(){
+        alert('click on the button')
+    }
+    document.querySelector('#button').onclick = button_onclick
+</script>
