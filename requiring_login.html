@@ -1,0 +1,27 @@
+<!-- requiring login (declarative) -->
+<!-- class="requires_login" declares "first login then do" -->
+<button onclick="window.username=null">logout</button>
+<br>
+<button id="action1" class="requires_login">action1 (requires login)</button>
+<br>
+<button id="action2" class="requires_login">action2 (requires login)</button>
+
+<script>
+// login is invalid by default
+username=null
+// for every element that requires a login
+for(element of document.querySelectorAll('.requires_login'))
+	// first add a login handling ...
+	element.addEventListener('click', event => {
+		// if login is invalid do a login
+		if(username==null)username=prompt('login')
+		// if login is invalid stop event propagation
+		if(username==null)event.stopImmediatePropagation()
+	})
+// ... after login handling handle the specific
+document.all.action1.addEventListener('click', event => {
+	alert(username+' does action1')
+})
+document.all.action2.addEventListener('click', event => {
+	alert(username+' does action2')
+})
