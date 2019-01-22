@@ -14,7 +14,7 @@ for(element of document.querySelectorAll('.requires_login'))
 	// first add a login handling ...
 	element.addEventListener('click', event => {
 		// if login is invalid do a login
-		if(username==null)username=prompt('login')
+		if(username==null)username=prompt('login','username')
 		// if login is invalid stop event propagation
 		if(username==null)event.stopImmediatePropagation()
 	})
