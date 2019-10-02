@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>custom tags</title>
+<h3>custom tags</h3>
+
+<a user="0"></a> <br>
+<a user="1"></a> <br>
+<a user="2"></a> <br>
+
+<script>
+var users=document.querySelectorAll('a[user]')
+
+var user_data={
+0:['Dario Cangialosi','dario.cangialosi'],
+1:['Firstname Lastname','profile.address'],
+2:['Mario Rossi','mario.rossi.work'],
+}
+
+for(var iuser of users){
+var uid=iuser.getAttribute('user')
+iuser.innerHTML=user_data[uid][0]
+iuser.href='/u/'+user_data[uid][1]
+}
+</script>
