@@ -19,7 +19,7 @@ var user_data={
 
 for(var iuser of users){
 var uid=iuser.getAttribute('user')
-iuser.innerHTML=user_data[uid][0]
+iuser.text=user_data[uid][0]
 iuser.href='/u/'+user_data[uid][1]
 }
 </script>
