@@ -1,10 +1,16 @@
+<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>4 digits PIN input</title>
-4 digits PIN input
-<input placeholder="pin [0-9]{4}" id="pin" type="password" maxlength="4" size="5">
+4 digits PIN input: [0-9]{4}
+<input placeholder="PIN" id="pin" type="password" maxlength="4" size="5">
 <script>
 document.all.pin.oninput=function(){
 this.value=this.value.replace(/[^0-9]/g,"")
-if(this.value.length==4)alert("pin inserted:"+this.value)
+var PIN=this.value
+if(PIN.length==4)
+setTimeout(function(){handle_PIN(PIN)})
+}
+function handle_PIN(PIN){
+alert("PIN inserted:"+PIN)
 }
 </script>
