@@ -1,0 +1,20 @@
+<meta charset="utf-8">
+
+<button onclick="tab(1)">1</button><button onclick="tab(2)">2</button><button onclick="tab(3)">3</button>
+<div id="tab1" class="tab">tab 1</div>
+<div id="tab2" class="tab">tab 2</div>
+<div id="tab3" class="tab">tab 3</div>
+<script>
+const sel=(query)=>document.querySelectorAll(query);
+function hide_tabs(){ for(const tab of sel(".tab")) tab.style.display="none"; }
+function show_tabs(){ for(const tab of sel(".tab")) tab.style.display="initial"; }
+hide_tabs();
+onhashchange=()=>tab(location.hash.slice(1));
+onhashchange();
+function tab(id){
+	if(id==0){ show_tabs(); return; }
+	hide_tabs();
+	sel("#tab"+id+".tab")[0].style.display="initial";
+	location.hash=id;
+}
+</script>
