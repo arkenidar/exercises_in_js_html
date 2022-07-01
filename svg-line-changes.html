@@ -1,0 +1,22 @@
+<!doctype html><html>
+<head></head>
+<body>
+
+ScalableVectorialGraphics (SVG) polyline with onclick that sets colors with sequence rotation <br>
+
+<script> color=["red","yellow","green"]
+function rotate(){ color.push(color.shift()) }
+function respond(clicked){
+clicked.style.stroke=color[0]
+rotate()}
+</script>
+
+<svg height="200" width="500">
+<polyline onclick="respond(this)"          
+points="20,20 40,25 60,40 80,120 120,140 200,180"
+style="fill:none;stroke:black;stroke-width:15"
+/>
+</svg>
+
+</body>
+</html>
