@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>intro: increment-decrement</title>
+</head>
+<body>
+
+<style> button, #number { width: 35px; height: 35px; font-size: 25px; 
+text-align: center; vertical-align: bottom; display: inline-block; } </style>
+
+<button id=decr>-</button><span id=number>0</span><button id=incr>+</button>
+
+<script>
+function delta(amount) {
+	number.textContent = parseInt(number.textContent) + amount
+}
+
+decr.onclick = event=>delta(-1)
+incr.onclick = event=>delta(+1)
+</script>
+
+</body>
+</html>
