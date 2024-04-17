@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view-tabs</title>
+</head>
+
+<body>
+    <h1>view-tabs</h1>
+    <style>
+        .view-tabs>[data-content-selector] {
+            border: 1px solid black;
+            display: inline;
+        }
+
+        .tab-content {
+            display: none;
+        }
+    </style>
+    <script>
+        function showTab(targetTab) {
+            const tabs = targetTab.parentNode
+            const targetContentSelector = targetTab.dataset.contentSelector
+            function queryStyle(selector) {
+                return tabs.querySelector(selector).style
+            }
+            const contentStyle = queryStyle(targetContentSelector)
+            // pre-condition (it must be hidden)
+            if (contentStyle.display == "") { // if is hidden
+                // hide previous
+                queryStyle(tabs.dataset.activeContentSelector).display = "" // set hidden
+                // show current
+                contentStyle.display = "initial" // set shown
+                // track which one is active
+                tabs.dataset.activeContentSelector = targetContentSelector // set active
+            }
+        }
+        function initialTabs() {
+            for (const tabs of document.querySelectorAll(".view-tabs[data-active-content-selector]")) {
+                const contentSelector = tabs.dataset.activeContentSelector
+                showTab(tabs.querySelector('[data-content-selector="' + contentSelector + '"]'))
+            }
+        }
+        document.addEventListener('DOMContentLoaded', initialTabs)
+    </script>
+    <div class="view-tabs" data-active-content-selector="#content1" onclick="showTab(event.target)">
+        <div data-content-selector="#content1">tab1</div>
+        <div data-content-selector="#content2">tab2</div>
+        <div data-content-selector="#content3">tab3</div>
+        <br>
+        <div id="content1" class="tab-content">content1</div>
+        <div id="content2" class="tab-content">content2</div>
+        <div id="content3" class="tab-content">content3</div>
+    </div>
+    <hr>
+    <div class="view-tabs" data-active-content-selector="#content2" onclick="showTab(event.target)">
+        <div data-content-selector="#content1">tab1</div>
+        <div data-content-selector="#content2">tab2</div>
+        <br>
+        <div id="content1" class="tab-content">content1</div>
+        <div id="content2" class="tab-content">content2</div>
+    </div>
+
+</body>
+
+</html>
