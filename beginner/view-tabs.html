@@ -18,30 +18,55 @@
         .tab-content {
             display: none;
         }
+
+        .tab-active {
+            background-color: red;
+        }
     </style>
     <script>
         function showTab(targetTab) {
-            let tabs = targetTab.parentNode
-            if(!tabs.dataset.activeContentSelector) tabs = tabs.parentNode
+
+            // initial const: "tabs" is parent node of target tab
+            let tabsFind = targetTab.parentNode
+            if (!tabsFind.dataset.activeContentSelector) tabsFind = tabsFind.parentNode
+            const tabs = tabsFind
+
+            // initial const: selector of current tab to show
             const targetContentSelector = targetTab.dataset.contentSelector
-            function queryStyle(selector) {
-                return tabs.querySelector(selector).style
-            }
-            const contentStyle = queryStyle(targetContentSelector)
+
+            // initial const: node of current tab to show
+            const currentTabContent = tabs.querySelector(targetContentSelector)
+
             // pre-condition (it must be hidden)
-            if (contentStyle.display == "") { // if is hidden
-                // hide previous
-                queryStyle(tabs.dataset.activeContentSelector).display = "" // set hidden
-                // show current
-                contentStyle.display = "initial" // set shown
-                // track which one is active
+            if (currentTabContent.style.display == "") { // if is hidden
+
+                // before: previous selector
+                const previousTabSelector = tabs.dataset.activeContentSelector
+
+                // previous: hide previous content
+                const previousTabContent = tabs.querySelector(previousTabSelector)
+                previousTabContent.style.display = "" // set hidden
+
+                // previous: remove class .tab-active
+                getTab(tabs, previousTabSelector).classList.remove("tab-active")
+
+                // current: show current content
+                currentTabContent.style.display = "initial" // set shown
+
+                // current: add class .tab-active
+                getTab(tabs, targetContentSelector).classList.add("tab-active")
+
+                // after: track which one is active
                 tabs.dataset.activeContentSelector = targetContentSelector // set active
             }
+        }
+        function getTab(tabs, selector) {
+            return tabs.querySelector('[data-content-selector="' + selector + '"]')
         }
         function initialTabs() {
             for (const tabs of document.querySelectorAll(".view-tabs[data-active-content-selector]")) {
                 const contentSelector = tabs.dataset.activeContentSelector
-                showTab(tabs.querySelector('[data-content-selector="' + contentSelector + '"]'))
+                showTab(getTab(tabs, contentSelector))
             }
         }
         document.addEventListener('DOMContentLoaded', initialTabs)
