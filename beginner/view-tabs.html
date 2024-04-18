@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>view-tabs</title>
+    <title>view tabs</title>
 </head>
 
 <body>
-    <h1>view-tabs</h1>
+    <h1>view tabs</h1>
     <style>
-        .view-tabs>[data-content-selector] {
+        .view-tabs [data-content-selector] {
             border: 1px solid black;
             display: inline;
         }
@@ -21,7 +21,8 @@
     </style>
     <script>
         function showTab(targetTab) {
-            const tabs = targetTab.parentNode
+            let tabs = targetTab.parentNode
+            if(!tabs.dataset.activeContentSelector) tabs = tabs.parentNode
             const targetContentSelector = targetTab.dataset.contentSelector
             function queryStyle(selector) {
                 return tabs.querySelector(selector).style
@@ -46,21 +47,21 @@
         document.addEventListener('DOMContentLoaded', initialTabs)
     </script>
     <div class="view-tabs" data-active-content-selector="#content1" onclick="showTab(event.target)">
-        <div data-content-selector="#content1">tab1</div>
-        <div data-content-selector="#content2">tab2</div>
-        <div data-content-selector="#content3">tab3</div>
+        <div data-content-selector="#content1">tab 1</div>
+        <div data-content-selector="#content2">tab 2</div>
+        <div data-content-selector="#content3">tab 3</div>
         <br>
-        <div id="content1" class="tab-content">content1</div>
-        <div id="content2" class="tab-content">content2</div>
-        <div id="content3" class="tab-content">content3</div>
+        <div id="content1" class="tab-content">content 1</div>
+        <div id="content2" class="tab-content">content 2</div>
+        <div id="content3" class="tab-content">content 3</div>
     </div>
     <hr>
     <div class="view-tabs" data-active-content-selector="#content2" onclick="showTab(event.target)">
-        <div data-content-selector="#content1">tab1</div>
-        <div data-content-selector="#content2">tab2</div>
+        <div data-content-selector="#content1">tab 1</div>
+        <div data-content-selector="#content2">tab 2</div>
         <br>
-        <div id="content1" class="tab-content">content1</div>
-        <div id="content2" class="tab-content">content2</div>
+        <div id="content1" class="tab-content">content 1</div>
+        <div id="content2" class="tab-content">content 2</div>
     </div>
 
     <script src="https://arkenidar.com/web/show-source.js" data-href="?show-source"></script>
