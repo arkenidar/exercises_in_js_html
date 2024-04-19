@@ -65,6 +65,22 @@
                 // after: track which one is active
                 tabs.dataset.activeContentSelector = targetContentSelector // set active
             }
+            else
+                /* [reverse the activation, hiding the active] interacting with a tab that
+             is already shown results in hiding its content (reversing its activation). */
+                if (currentTabContent && currentTabContent.style.display != "") { // if is shown
+
+                    // current: hide current content
+                    if (currentTabContent)
+                        currentTabContent.style.display = "" // set hidden
+
+                    // current: remove class .tab-active
+                    if (currentTabContent)
+                        getTab(tabs, targetContentSelector).classList.remove("tab-active")
+
+                    // after: track which one is active
+                    tabs.dataset.activeContentSelector = "" // set active to nothing, nothing active
+                }
         }
         function getTab(tabs, selector) {
             return tabs.querySelector('[data-content-selector="' + selector + '"]')
