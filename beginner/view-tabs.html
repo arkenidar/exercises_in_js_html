@@ -26,35 +26,41 @@
     <script>
         function showTab(targetTab) {
 
+            if (!targetTab) return
+
             // initial const: "tabs" is parent node of target tab
-            let tabsFind = targetTab.parentNode
-            if (!tabsFind.dataset.activeContentSelector) tabsFind = tabsFind.parentNode
+            let tabsFind = targetTab
+            while (!tabsFind.classList.contains("view-tabs")) tabsFind = tabsFind.parentNode
             const tabs = tabsFind
 
             // initial const: selector of current tab to show
             const targetContentSelector = targetTab.dataset.contentSelector
 
             // initial const: node of current tab to show
-            const currentTabContent = tabs.querySelector(targetContentSelector)
+            const currentTabContent = targetContentSelector ? tabs.querySelector(targetContentSelector) : undefined
 
             // pre-condition (it must be hidden)
-            if (currentTabContent.style.display == "") { // if is hidden
+            if (currentTabContent && currentTabContent.style.display == "") { // if is hidden
 
                 // before: previous selector
                 const previousTabSelector = tabs.dataset.activeContentSelector
 
                 // previous: hide previous content
-                const previousTabContent = tabs.querySelector(previousTabSelector)
-                previousTabContent.style.display = "" // set hidden
+                const previousTabContent = previousTabSelector ? tabs.querySelector(previousTabSelector) : undefined
+                if (previousTabContent)
+                    previousTabContent.style.display = "" // set hidden
 
                 // previous: remove class .tab-active
-                getTab(tabs, previousTabSelector).classList.remove("tab-active")
+                if (previousTabContent)
+                    getTab(tabs, previousTabSelector).classList.remove("tab-active")
 
                 // current: show current content
-                currentTabContent.style.display = "initial" // set shown
+                if (currentTabContent)
+                    currentTabContent.style.display = "initial" // set shown
 
                 // current: add class .tab-active
-                getTab(tabs, targetContentSelector).classList.add("tab-active")
+                if (currentTabContent)
+                    getTab(tabs, targetContentSelector).classList.add("tab-active")
 
                 // after: track which one is active
                 tabs.dataset.activeContentSelector = targetContentSelector // set active
@@ -75,13 +81,14 @@
         <div data-content-selector="#content1">tab 1</div>
         <div data-content-selector="#content2">tab 2</div>
         <div data-content-selector="#content3">tab 3</div>
+        <div data-content-selector="#wrong_selector_for_testing">tab 4</div>
         <br>
         <div id="content1" class="tab-content">content 1</div>
         <div id="content2" class="tab-content">content 2</div>
         <div id="content3" class="tab-content">content 3</div>
     </div>
     <hr>
-    <div class="view-tabs" data-active-content-selector="#content2" onclick="showTab(event.target)">
+    <div class="view-tabs" onclick="showTab(event.target)">
         <div data-content-selector="#content1">tab 1</div>
         <div data-content-selector="#content2">tab 2</div>
         <br>
