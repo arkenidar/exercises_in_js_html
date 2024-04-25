@@ -1,0 +1,43 @@
+<p><b>bold tag (b for "bold font")</b></p>
+
+<p><a href="https://unsafe.com">unsafe link</a></p>
+
+<p><a href="javascript:alert('javascript in href demo')"> javascript through "href" html attribute is also possible. </a></p>
+
+<p><button onclick="alert('javascript in button')">javascript in button</button></p>
+
+<p>(for showing HTML injection effects, but there are many more possible)</p>
+
+<script>
+// this <script> tag is not executed...
+
+// so this function is not defined (in this way/case)
+function function1(){
+alert("unsafe content injects javascript. this is using a <script> HTML tag")
+}
+
+// this is not execute in this way
+onmouseover=function1
+
+// this can be used to inject also a <script> tag
+// (I used this for a live HTML/JS/CSS in-browser editor)
+// (see: https://arkenidar.github.io/editor/editor.html
+// https://github.com/arkenidar/editor)
+function nodeContentFromCode(code, node) {
+    var range = document.createRange()
+    range.selectNode(document.body)
+    var documentFragment = range.createContextualFragment(code)
+    node.innerHTML = ""
+    node.appendChild(documentFragment)
+}
+
+</script>
+
+<button onclick="function1()">function1() javascript function</button>
+
+<div onmouseover="alert('from onmouseover (executed)')">
+<p>HOVER THIS</p>
+<p>HOVER THIS</p>
+<p>HOVER THIS</p>
+<p>HOVER THIS</p>
+</div>

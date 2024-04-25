@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html injection</title>
+</head>
+
+<body>
+    <h2>description</h2>
+    <p>handling potentially unsafe content: html injection risk (malicious also).</p>
+    <p>javascript injection also possible by means of injecting a "script" html tag</p>
+    <p>javascript through "href" html attribute is also possible.</p>
+    <p>javascript through "onclick" and "onmouseover" are demonstrated also.</p>
+
+    <hr>
+    <h2>distinction between innerText and innerHTML</h2>
+    <div id="js_div1"></div>
+    <div id="js_div2"></div>
+    <script>
+        js_div1.innerText = '<b>bold tag (b for "bold font")</b>'
+        js_div2.innerHTML = '<b>bold tag (b for "bold font")</b>'
+    </script>
+
+    <hr>
+    <h2>input of safe or unsafe (malicious also)</h2>
+    <div id="input_div1"></div>
+    <div id="input_div2"></div>
+    <textarea id="input" rows="4" cols="45">
+        <b>bold tag (b for "bold font")</b>
+        <a href="javascript:alert('javascript is executed here')">javascript here</a>
+    </textarea>
+    <script>
+        function processUserInput() {
+            input_div1.innerText = input.value
+            input_div2.innerHTML = input.value
+        }
+    </script>
+    <button onclick="processUserInput()">input</button>
+
+    <hr>
+    <h2>here fetch() is demonstrated for content from HTTP (both static and dynamic content, from http servers, files
+        and/or web apps/apis)</h2>
+    <h3>fetch_div1.innerText = text</h3>
+    <div id="fetch_div1"></div>
+    <h3>fetch_div2.innerHTML = text</h3>
+    <div id="fetch_div2"></div>
+    <script type="module">
+        const http_response = await fetch("html-injection--potentially_unsafe_content.txt")
+        const text = await http_response.text()
+        fetch_div1.innerText = text
+        fetch_div2.innerHTML = text
+    </script>
+
+    <hr>
+    <h2>ES6 string e.g. from PHP's echo</h2>
+    <div id="server_string1"></div>
+    <script>
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+        let string1 = `it's unsafe to echo into a JS variable.
+         so use HTTP requests to fetch data to insert into HTML.
+         and insert it in a safe way e.g. as ".innerText" or ".textContent" or ".value" (cases) !
+         and not ".innerHTML" (only if "you know what you are doing", meaning being security-aware.) `
+        server_string1.textContent = string1
+    </script>
+
+</body>
+
+</html>
