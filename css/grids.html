@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>grids</title>
+</head>
+
+<body>
+    <style>
+        body {
+            margin: 4px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            width: 90vmin;
+            height: 90vmin;
+        }
+
+        .grid>div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1;
+            font-size: 25vmin;
+            background-color: lightgray;
+            border: 1px solid black;
+        }
+    </style>
+
+    <div class="grid">
+        <div>0</div>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+    </div>
+
+</body>
+
+</html>
