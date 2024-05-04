@@ -77,7 +77,7 @@
                     getTab(tabs, targetContentSelector).classList.add("tab-active")
 
                 // after: track which one is active
-                tabs.dataset.activeContentSelector = targetContentSelector // set active
+                setActiveContentSelector(tabs, targetContentSelector) // set active
             }
             else
                 /* [reverse the activation, hiding the active] interacting with a tab that
@@ -93,22 +93,30 @@
                         getTab(tabs, targetContentSelector).classList.remove("tab-active")
 
                     // after: track which one is active
-                    tabs.dataset.activeContentSelector = "" // set active to nothing, nothing active
+                    setActiveContentSelector(tabs, "") // set active to nothing, nothing active
                 }
+
+            function setActiveContentSelector(tabs, selector) {
+                tabs.dataset.activeContentSelector = selector
+                if (tabs.id)
+                    sessionStorage.setItem("tabs.id :: " + tabs.id, selector)
+            }
         }
         function getTab(tabs, selector) {
             return tabs.querySelector('[data-content-selector="' + selector + '"]')
         }
         function initialTabs() {
-            for (const tabs of document.querySelectorAll(".view-tabs[data-active-content-selector]")) {
-                const contentSelector = tabs.dataset.activeContentSelector
+            for (const tabs of document.querySelectorAll(".view-tabs")) {
+                let contentSelector = sessionStorage.getItem("tabs.id :: " + tabs.id)
+                if (!contentSelector)
+                    contentSelector = tabs.dataset.activeContentSelector
                 showTab(getTab(tabs, contentSelector))
             }
         }
         document.addEventListener('DOMContentLoaded', initialTabs)
     </script>
 
-    <div class="view-tabs" data-active-content-selector="#content1" onclick="showTab(event.target)">
+    <div class="view-tabs" id="pages" data-active-content-selector="#content1" onclick="showTab(event.target)">
         <div class="contents">
             <div id="content1" class="tab-content">
                 <h3>content 1</h3>
@@ -131,7 +139,7 @@
 
     <hr>
 
-    <div class="view-tabs" data-active-content-selector="#content1" onclick="showTab(event.target)">
+    <div class="view-tabs" id="tabs" data-active-content-selector="#content1" onclick="showTab(event.target)">
         <div data-content-selector="#content1">tab 1</div>
         <div data-content-selector="#content2">tab 2</div>
         <div data-content-selector="#content3">tab 3</div>
