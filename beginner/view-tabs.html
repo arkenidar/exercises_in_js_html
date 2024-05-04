@@ -98,7 +98,7 @@
 
             function setActiveContentSelector(tabs, selector) {
                 tabs.dataset.activeContentSelector = selector
-                if (tabs.id)
+                if (tabs.id != "")
                     sessionStorage.setItem("tabs.id :: " + tabs.id, selector)
             }
         }
@@ -108,7 +108,7 @@
         function initialTabs() {
             for (const tabs of document.querySelectorAll(".view-tabs")) {
                 let contentSelector = sessionStorage.getItem("tabs.id :: " + tabs.id)
-                if (!contentSelector)
+                if (contentSelector == null)
                     contentSelector = tabs.dataset.activeContentSelector
                 showTab(getTab(tabs, contentSelector))
             }
