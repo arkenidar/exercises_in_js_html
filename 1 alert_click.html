@@ -1,20 +1,35 @@
-<!doctype html>
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
 
-<button id="button">click me</button>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>alert from click</title>
+</head>
 
-<pre>
-alert() function
-event handler assignment
-click event type
-querySelector function
-</pre>
+<body>
 
-<script>
-    alert('message from alert')
+    <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"
+        onclick="this.href=this.innerText">https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer</a>
 
-    function button_onclick(){
-        alert('click on the button')
-    }
-    document.querySelector('#button').onclick = button_onclick
-</script>
+    <ul>
+        <li>function: alert()</li>
+        <li>function declaration: button_onclick</li>
+        <li>function: .querySelector()</li>
+        <li>event type: click</li>
+        <li>event handler assignment</li>
+    </ul>
+
+    <button id="button">click me</button>
+
+    <script>
+        // alert("message from alert");
+
+        function button_onclick() {
+            alert("click on the button");
+        }
+        document.querySelector("#button").onclick = button_onclick;
+    </script>
+</body>
+
+</html>

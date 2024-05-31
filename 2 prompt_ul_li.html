@@ -1,22 +1,41 @@
-<!doctype html>
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
 
-<button id="add_button">add</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prompt and listing</title>
+</head>
 
-<ul id="list"></ul>
+<body>
 
-<pre>
-createElement
-appendChild
-innerText
-prompt
-</pre>
+    <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"
+        onclick="this.href=this.innerText">https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer</a>
 
-<script>
-    function add_onclick(){
-        var li = document.createElement('li')
-        li.innerText = prompt('add element')
-        document.querySelector('#list').appendChild(li)
-    }
-    document.querySelector('#add_button').onclick = add_onclick
-</script>
+    <ul>
+        <li>function declaration: add_onclick</li>
+        <li>function: .createElement()</li>
+        <li>function: prompt()</li>
+        <li>property: .innerText</li>
+        <li>function: .querySelector()</li>
+        <li>function: .appendChild()</li>
+        <li>event type: click</li>
+        <li>event handler assignment</li>
+    </ul>
+
+    <button id="add_button">add</button>
+
+    <ul id="list"></ul>
+
+    <script>
+        function add_onclick() {
+            var li = document.createElement("li")
+            li.innerText = prompt("add element")
+            document.querySelector("#list").appendChild(li)
+        }
+        document.querySelector("#add_button").onclick = add_onclick
+    </script>
+
+</body>
+
+</html>
