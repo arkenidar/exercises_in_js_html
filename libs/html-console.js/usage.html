@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html-console.js</title>
+</head>
+
+<body>
+
+    <h1>html-console.js</h1>
+
+    https://arkenidar.com/web/html-console.js
+
+    <script src="html-console.js"></script>
+    <div id="html_console"></div>
+    <script type="module">
+        const { ask, outputLine } = HTMLConsole(document.querySelector("#html_console"))
+        const x = await ask("number to square")
+        outputLine("x^2=" + x ** 2)
+    </script>
+</body>
+
+</html>
