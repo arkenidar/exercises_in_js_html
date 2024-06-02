@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rays</title>
+</head>
+
+<body>
+    <h1>rays</h1>
+    <p>shadow calculation by intersection (intersection of circle with line segment).</p>
+    <script>
+
+        // https://chatgpt.com/share/93b1183d-3968-4851-9870-afe32f8b5d3f
+        // #ask js to check if a line segment intersects a circle
+
+        // Function to check if a line segment intersects a circle
+        function isIntersecting(cx, cy, r, x1, y1, x2, y2) {
+            // Compute the differences
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+
+            // Compute the length of the line segment squared
+            const lenSq = dx * dx + dy * dy;
+
+            // Compute the projection factor
+            const t = ((cx - x1) * dx + (cy - y1) * dy) / lenSq;
+
+            // Find the closest point on the line segment to the circle's center
+            let closestX, closestY;
+            if (t < 0) {
+                closestX = x1;
+                closestY = y1;
+            } else if (t > 1) {
+                closestX = x2;
+                closestY = y2;
+            } else {
+                closestX = x1 + t * dx;
+                closestY = y1 + t * dy;
+            }
+
+            // Compute the distance from the closest point to the circle's center
+            const distX = closestX - cx;
+            const distY = closestY - cy;
+            const distSq = distX * distX + distY * distY;
+
+            // Check if the distance is less than or equal to the circle's radius squared
+            return distSq <= r * r;
+        }
+    </script>
+
+    <hr>
+    <script>let shadow = false</script>
+    <button onclick="shadow=!shadow">shadow simulation toggle</button>
+    <hr>
+
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script>
+        // Get the canvas and its context
+        const canvas = document.querySelector("#canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Draw the circle and the line segment
+        // https://chatgpt.com/share/93b1183d-3968-4851-9870-afe32f8b5d3f
+        // #ask dhtml mouse position on a canvas
+        canvas.addEventListener('mousemove', function (event) {
+            // Get the mouse position
+            const mousePos = getMousePos(canvas, event);
+            console.log('Mouse position: x=' + mousePos.x + ', y=' + mousePos.y);
+
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the circle
+            // circle center
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            // circle radius
+            const r = 100;
+
+            // Draw the circle           
+            ctx.fillStyle = "blue";
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Draw the line segment
+            if (shadow == false) {
+
+                // Draw the line segment
+                // line segment start
+                const x1 = 0;
+                const y1 = 0;
+                // line segment end
+                const x2 = mousePos.x;
+                const y2 = mousePos.y;
+
+                // Draw the line segment
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+                // Check if the line segment intersects the circle
+                if (isIntersecting(cx, cy, r, x1, y1, x2, y2)) {
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(cx - 5, cy - 5, 10, 10);
+                }
+
+            }
+
+            // Get the mouse position
+            const mx = mousePos.x;
+            const my = mousePos.y;
+
+            // Draw the shadow
+            if (shadow == true)
+                for (let px = 0; px < canvas.width; px++) {
+                    for (let py = 0; py < canvas.height; py++) {
+                        if (isIntersecting(cx, cy, r, mx, my, px, py)) {
+                            ctx.fillStyle = "black";
+                            ctx.fillRect(px, py, 1, 1);
+                        }
+                    }
+                }
+        });
+
+        // Function to get the mouse position on the canvas
+        function getMousePos(canvas, event) {
+            const rect = canvas.getBoundingClientRect(); // Get the canvas's position relative to the viewport
+            return {
+                x: event.clientX - rect.left, // Calculate x position relative to canvas
+                y: event.clientY - rect.top  // Calculate y position relative to canvas
+            };
+        }
+
+    </script>
+</body>
+
+</html>
