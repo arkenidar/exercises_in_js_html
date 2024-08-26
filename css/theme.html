@@ -13,7 +13,6 @@
 
         body {
             font-family: Arial, sans-serif;
-            transition: all 0.3s ease;
         }
 
         button {
@@ -41,12 +40,6 @@
 </head>
 
 <body>
-    <h1>Theme Switcher Example</h1>
-    <p>Click the buttons below to switch themes:</p>
-    <button onclick="setTheme('light')">Light Theme</button>
-    <button onclick="setTheme('dark')">Dark Theme</button>
-    <button onclick="setTheme('flame')">Flame Theme</button>
-
     <script>
 
         // a theme is saved in localStorage ( or default )
@@ -58,6 +51,12 @@
             document.body.classList.add('theme-' + theme);
         }
     </script>
+
+    <h1>Theme Switcher Example</h1>
+    <p>Click the buttons below to switch themes:</p>
+    <button onclick="setTheme('light')">Light Theme</button>
+    <button onclick="setTheme('dark')">Dark Theme</button>
+    <button onclick="setTheme('flame')">Flame Theme</button>
 </body>
 
 </html>
