@@ -70,46 +70,54 @@
             const mousePos = getMousePos(canvas, event);
             console.log('Mouse position: x=' + mousePos.x + ', y=' + mousePos.y);
 
-            // Clear the canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the circle
             // circle center
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
             // circle radius
             const r = 100;
 
-            // Draw the circle           
-            ctx.fillStyle = "blue";
-            ctx.beginPath();
-            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-            ctx.stroke();
+            const circles = [[cx, cy, r], [cx / 4, cy / 4, r / 5]]
 
-            // Draw the line segment
-            if (shadow == false) {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Draw the line segment
-                // line segment start
-                const x1 = 0;
-                const y1 = 0;
-                // line segment end
-                const x2 = mousePos.x;
-                const y2 = mousePos.y;
+            // Draw the circles
+            for (const circle of circles) {
 
-                // Draw the line segment
+                const [cx, cy, r] = circle
+
+                // Draw the circle           
+                ctx.fillStyle = "blue";
                 ctx.beginPath();
-                ctx.moveTo(x1, y1);
-                ctx.lineTo(x2, y2);
+                ctx.arc(cx, cy, r, 0, 2 * Math.PI);
                 ctx.stroke();
 
-                // Check if the line segment intersects the circle
-                if (isIntersecting(cx, cy, r, x1, y1, x2, y2)) {
-                    ctx.fillStyle = "red";
-                    ctx.fillRect(cx - 5, cy - 5, 10, 10);
-                }
+                // Draw the line segment
+                if (shadow == false) {
 
-            }
+                    // Draw the line segment
+
+                    // line segment start
+                    const x1 = 0;
+                    const y1 = 0;
+                    // line segment end
+                    const x2 = mousePos.x;
+                    const y2 = mousePos.y;
+
+                    // Draw the line segment
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+
+                    // Check if the line segment intersects the circle
+                    if (isIntersecting(cx, cy, r, x1, y1, x2, y2)) {
+                        ctx.fillStyle = "red";
+                        ctx.fillRect(cx - 5, cy - 5, 10, 10);
+                    }
+
+                }
+            } // for : circles
 
             // Get the mouse position
             const mx = mousePos.x;
@@ -119,13 +127,22 @@
             if (shadow == true)
                 for (let px = 0; px < canvas.width; px++) {
                     for (let py = 0; py < canvas.height; py++) {
-                        if (isIntersecting(cx, cy, r, mx, my, px, py)) {
-                            ctx.fillStyle = "black";
-                            ctx.fillRect(px, py, 1, 1);
-                        }
+
+                        for (const circle of circles) {
+
+                            const [cx, cy, r] = circle
+
+                            if (isIntersecting(cx, cy, r, mx, my, px, py)) {
+                                // point is in shadow
+                                ctx.fillStyle = "black";
+                                ctx.fillRect(px, py, 1, 1);
+                            }
+
+                        } // for : circles
+
                     }
                 }
-        });
+        }); // event handler : mouse move
 
         // Function to get the mouse position on the canvas
         function getMousePos(canvas, event) {
@@ -137,6 +154,16 @@
         }
 
     </script>
+
+    <hr>
+    <h2>screen captures</h2>
+    <style>
+        img,
+        canvas {
+            border: 2px dashed grey;
+        }
+    </style>
+    <img src="rays-screens-01.gif" alt="screen capture 1">
 
     <hr>
     <script src="../../libs/show-source.js/show-source.js" data-href="rays.html"></script>
