@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>svg dom js</title>
+    <style>
+        /* Responsive Design for Small Screens */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 0;
+            overflow-x: auto;
+        }
+
+        /* Responsive SVG containers */
+        .svg-container {
+            width: 100%;
+            max-width: 500px;
+            overflow-x: auto;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        /* Make SVGs responsive */
+        svg {
+            width: 100%;
+            height: auto;
+            min-width: 300px;
+            /* Minimum readable size */
+            display: block;
+        }
+
+        /* Responsive buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 12px;
+            border: 1px solid #333;
+            background: #f0f0f0;
+            cursor: pointer;
+            border-radius: 4px;
+            flex: 1;
+            min-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        button:hover {
+            background: #e0e0e0;
+        }
+
+        button:active {
+            background: #d0d0d0;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 480px) {
+            body {
+                margin: 5px;
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 11px;
+                padding: 6px 8px;
+                min-width: 100px;
+            }
+
+            h3,
+            h4 {
+                font-size: 16px;
+                margin: 15px 0 10px 0;
+            }
+
+            svg {
+                min-width: 280px;
+            }
+
+            /* Stack buttons vertically on very small screens */
+            .btn-group {
+                flex-direction: column;
+            }
+
+            button {
+                flex: none;
+                width: 100%;
+            }
+        }
+
+        /* Tablet styles */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .btn-group {
+                justify-content: center;
+            }
+
+            button {
+                min-width: 140px;
+            }
+        }
+
+        /* Existing styles */
+        rect {
+            fill: yellowgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="svg-container">
+        <svg viewBox="0 0 400 110" preserveAspectRatio="xMidYMid meet">
+            <rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+            <circle id="myCircle" cx="50" cy="50" r="25" stroke="black" stroke-width="3" fill="orange" />
+        </svg>
+    </div>
+
+    <div class="btn-group">
+        <button onclick="myCircle.setAttribute('cx', 200)">Move Circle</button>
+        <button onclick="myCircle.setAttribute('fill', 'purple')">Purple Circle</button>
+        <button onclick="location.reload()">Reload</button>
+    </div>
+
+    <hr>
+
+    <div class="svg-container">
+        <svg viewBox="0 0 400 110" preserveAspectRatio="xMidYMid meet">
+            <rect id="rectangle2" width="300" height="100" style="stroke-width:10px;stroke:rgb(0,0,0)" />
+        </svg>
+    </div>
+
+    <div class="btn-group">
+        <button onclick="rectangle2.style.fill = 'teal'">Teal Fill</button>
+        <button onclick="rectangle2.style.stroke = 'purple' ; rectangle2.style.strokeDasharray = '10,5'">
+            Purple Stroke ( and Dashed stroke ) </button>
+        <button onclick="location.reload()">Reload</button>
+    </div>
+
+</body>
+
+</html>
