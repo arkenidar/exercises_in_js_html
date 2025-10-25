@@ -144,6 +144,161 @@
         <button onclick="location.reload()">Reload</button>
     </div>
 
+    <!-- Dynamic SVG Element Creation -->
+    <hr>
+    <h3>Dynamic SVG Creation with JavaScript DOM</h3>
+    <div class="svg-container">
+        <svg id="dynamicSvg" viewBox="0 0 500 300" preserveAspectRatio="xMidYMid meet" style="border: 1px solid #ccc;">
+            <!-- Elements will be added here dynamically -->
+        </svg>
+    </div>
+
+    <div class="btn-group">
+        <button onclick="addCircle()">Add Random Circle</button>
+        <button onclick="addRectangle()">Add Random Rectangle</button>
+        <button onclick="addLine()">Add Random Line</button>
+        <button onclick="addPath()">Add Random Path</button>
+        <button onclick="addText()">Add Random Text</button>
+        <button onclick="clearSvg()">Clear All</button>
+    </div>
+
+    <script>
+        // SVG namespace is required for creating SVG elements
+        const SVG_NS = "http://www.w3.org/2000/svg";
+
+        function getRandomColor() {
+            const colors = ['red', 'blue', 'green', 'orange', 'purple', 'pink', 'teal', 'brown', 'gold', 'navy'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function getRandomPosition(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function addCircle() {
+            const svg = document.getElementById('dynamicSvg');
+
+            // Create circle element using createElementNS (required for SVG)
+            const circle = document.createElementNS(SVG_NS, 'circle');
+
+            // Set attributes
+            circle.setAttribute('cx', getRandomPosition(450));
+            circle.setAttribute('cy', getRandomPosition(250));
+            circle.setAttribute('r', 10 + getRandomPosition(30));
+            circle.setAttribute('fill', getRandomColor());
+            circle.setAttribute('stroke', 'black');
+            circle.setAttribute('stroke-width', '2');
+
+            // Add click event to remove element
+            circle.addEventListener('click', function () {
+                svg.removeChild(circle);
+            });
+
+            // Append to SVG
+            svg.appendChild(circle);
+        }
+
+        function addRectangle() {
+            const svg = document.getElementById('dynamicSvg');
+
+            const rect = document.createElementNS(SVG_NS, 'rect');
+            rect.setAttribute('x', getRandomPosition(400));
+            rect.setAttribute('y', getRandomPosition(200));
+            rect.setAttribute('width', 20 + getRandomPosition(80));
+            rect.setAttribute('height', 20 + getRandomPosition(60));
+            rect.setAttribute('fill', getRandomColor());
+            rect.setAttribute('stroke', 'black');
+            rect.setAttribute('stroke-width', '1');
+            rect.setAttribute('rx', '5'); // Rounded corners
+
+            // Add click to remove
+            rect.addEventListener('click', function () {
+                svg.removeChild(rect);
+            });
+
+            svg.appendChild(rect);
+        }
+
+        function addLine() {
+            const svg = document.getElementById('dynamicSvg');
+
+            const line = document.createElementNS(SVG_NS, 'line');
+            line.setAttribute('x1', getRandomPosition(500));
+            line.setAttribute('y1', getRandomPosition(300));
+            line.setAttribute('x2', getRandomPosition(500));
+            line.setAttribute('y2', getRandomPosition(300));
+            line.setAttribute('stroke', getRandomColor());
+            line.setAttribute('stroke-width', 2 + getRandomPosition(5));
+            line.setAttribute('stroke-linecap', 'round');
+
+            // Add click to remove
+            line.addEventListener('click', function () {
+                svg.removeChild(line);
+            });
+
+            svg.appendChild(line);
+        }
+
+        function addPath() {
+            const svg = document.getElementById('dynamicSvg');
+
+            const path = document.createElementNS(SVG_NS, 'path');
+
+            // Create a simple curved path
+            const startX = getRandomPosition(400);
+            const startY = getRandomPosition(200);
+            const endX = startX + getRandomPosition(100);
+            const endY = startY + getRandomPosition(100);
+            const controlX = startX + getRandomPosition(50);
+            const controlY = startY - getRandomPosition(50);
+
+            const pathData = `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`;
+
+            path.setAttribute('d', pathData);
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', getRandomColor());
+            path.setAttribute('stroke-width', '3');
+
+            // Add click to remove
+            path.addEventListener('click', function () {
+                svg.removeChild(path);
+            });
+
+            svg.appendChild(path);
+        }
+
+        function addText() {
+            const svg = document.getElementById('dynamicSvg');
+
+            const text = document.createElementNS(SVG_NS, 'text');
+            text.setAttribute('x', getRandomPosition(400));
+            text.setAttribute('y', 20 + getRandomPosition(250));
+            text.setAttribute('fill', getRandomColor());
+            text.setAttribute('font-family', 'Arial');
+            text.setAttribute('font-size', 12 + getRandomPosition(20));
+            text.setAttribute('font-weight', 'bold');
+
+            // Random text content
+            const texts = ['Hello!', 'SVG', 'DOM', 'JS', '🎨', '⭐', 'Cool!', 'Nice'];
+            text.textContent = texts[Math.floor(Math.random() * texts.length)];
+
+            // Add click to remove
+            text.addEventListener('click', function () {
+                svg.removeChild(text);
+            });
+
+            svg.appendChild(text);
+        }
+
+        function clearSvg() {
+            const svg = document.getElementById('dynamicSvg');
+            // Remove all child elements
+            while (svg.firstChild) {
+                svg.removeChild(svg.firstChild);
+            }
+        }
+    </script>
+
 </body>
 
 </html>
